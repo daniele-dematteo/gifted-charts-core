@@ -30,7 +30,7 @@ export const useAnimatedThreeDBar = (props: animatedBarPropTypes) => {
     ),
     topColor = getBarTopColor(
       isFocused,
-      focusBarOnPress,
+      focusedBarConfig,
       item.topColor,
       localTopColor
     ),

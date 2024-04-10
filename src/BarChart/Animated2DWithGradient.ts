@@ -1,8 +1,40 @@
-import { ViewStyle } from "react-native";
+import { ColorValue, ViewStyle } from "react-native";
 import { getBarFrontColor, getBarWidth } from "../utils";
 import { CommonPropsFor2Dand3DbarsType } from "./types";
 
-export const getPropsForAnimated2DWithGradient = (props) => {
+export const getPropsForAnimated2DWithGradient = (props: {
+  barBorderWidth?: number;
+  barBorderColor?: any;
+  barBorderRadius?: number;
+  item: any;
+  barBorderTopLeftRadius?: number;
+  barBorderTopRightRadius?: number;
+  barBorderBottomLeftRadius?: number;
+  barBorderBottomRightRadius?: number;
+  barWidth?: number;
+  barInnerComponent?: any;
+  barStyle?: any;
+  index: number;
+  opacity?: number;
+  barHeight: number;
+  intactTopLabel: any;
+  showValuesAsTopLabel?: boolean;
+  topLabelContainerStyle?: any;
+  topLabelTextStyle?: any;
+  roundedBottom?: any;
+  cappedBars?: any;
+  capRadius?: number;
+  roundedTop?: boolean;
+  barBackgroundPattern?: any;
+  patternId?: any;
+  frontColor?: ColorValue;
+  showGradient?: boolean;
+  gradientColor?: ColorValue;
+  selectedIndex: number;
+  focusBarOnPress?: any;
+  focusedBarConfig?: any;
+  isThreeD?: boolean;
+}) => {
   const {
     barBorderWidth,
     barBorderColor,

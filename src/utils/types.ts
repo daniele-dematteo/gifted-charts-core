@@ -258,6 +258,7 @@ export type BarAndLineChartsWrapperTypes = {
   onEndReached?: () => void;
   onStartReached?: () => void;
   endReachedOffset: number;
+  isRTL: boolean;
 };
 
 export type Pointer = {

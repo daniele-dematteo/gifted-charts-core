@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BarChartPropsType, barDataItem } from "./types";
+import { BarChartPropsType, barDataItem, stackDataItem } from "./types";
 import {
   getArrowPoints,
   getAxesAndRulesProps,
@@ -21,11 +21,12 @@ import {
   defaultPointerConfig,
 } from "../utils/constants";
 import { BarAndLineChartsWrapperTypes } from "../utils/types";
+import { Animated } from "react-native";
 
 interface extendedBarChartPropsType extends BarChartPropsType {
-  heightValue;
-  widthValue;
-  opacValue;
+  heightValue: Animated.Value;
+  widthValue: Animated.Value;
+  opacValue: Animated.Value;
 }
 
 export const useBarChart = (props: extendedBarChartPropsType) => {
@@ -161,7 +162,7 @@ export const useBarChart = (props: extendedBarChartPropsType) => {
     secondaryMinItem = 0;
 
   if (lineConfig.isSecondary) {
-    lineData.forEach((item: barDataItem) => {
+    (lineData as barDataItem[]).forEach((item: barDataItem) => {
       if (item.value > secondaryMaxItem) {
         secondaryMaxItem = item.value;
       }
@@ -542,7 +543,12 @@ export const useBarChart = (props: extendedBarChartPropsType) => {
     }
   }, []);
 
-  const setPointerConfig = (initialPointerIndex, item, x, y) => {
+  const setPointerConfig = (
+    initialPointerIndex: number,
+    item: any,
+    x: number,
+    y: number
+  ) => {
     setPointerIndex(initialPointerIndex);
     setPointerItem(item);
     setPointerX(x);
@@ -563,7 +569,11 @@ export const useBarChart = (props: extendedBarChartPropsType) => {
     outputRange: [0, initialSpacing + totalWidth + endSpacing],
   });
 
-  const getPropsCommonForBarAndStack = (item, index) => {
+  const getPropsCommonForBarAndStack = (
+    item: barDataItem | stackDataItem,
+    index: number
+  ) => {
+    
     return {
       key: index,
       item: item,
@@ -660,7 +670,7 @@ export const useBarChart = (props: extendedBarChartPropsType) => {
     lineConfig2,
     maxValue,
     lineData,
-    lineData2,
+    lineData2: lineData2 ?? [],
     animatedWidth,
     lineBehindBars,
     points,
@@ -701,6 +711,7 @@ export const useBarChart = (props: extendedBarChartPropsType) => {
     onEndReached: props.onEndReached,
     onStartReached: props.onStartReached,
     endReachedOffset: props.endReachedOffset ?? BarDefaults.endReachedOffset,
+    isRTL: false,
   };
 
   return {

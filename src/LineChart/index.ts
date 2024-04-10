@@ -28,10 +28,15 @@ import {
   svgPath,
 } from "../utils";
 import { LineChartPropsType } from "./types";
-import { BarAndLineChartsWrapperTypes, EdgePosition } from "../utils/types";
+import {
+  BarAndLineChartsWrapperTypes,
+  EdgePosition,
+  LineSegment,
+} from "../utils/types";
 
 interface extendedLineChartPropsType extends LineChartPropsType {
-  animations;
+  animations: any[];
+  screenWidth?: number;
 }
 
 export const useLineChart = (props: extendedLineChartPropsType) => {
@@ -190,7 +195,7 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
 
   const startIndex1 = props.startIndex1 ?? props.startIndex ?? 0;
 
-  let endIndex1;
+  let endIndex1: number;
   if (props.endIndex1 === undefined || props.endIndex1 === null) {
     if (props.endIndex === undefined || props.endIndex === null) {
       endIndex1 = data.length - 1;
@@ -430,8 +435,8 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
     containerHeight,
     overflowTop
   );
-  const getX = (index) => initialSpacing + spacing * index - 1;
-  const getY = (value) =>
+  const getX = (index: number) => initialSpacing + spacing * index - 1;
+  const getY = (value: number) =>
     extendedContainerHeight - (value * containerHeight) / maxValue;
 
   const { maxItem: secondaryMaxItem } = computeMaxAndMinItems(
@@ -441,13 +446,13 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
   );
   const secondaryMaxValue =
     props.secondaryYAxis?.maxValue ?? (secondaryMaxItem || maxValue);
-  const getSecondaryY = (value) =>
+  const getSecondaryY = (value: number) =>
     extendedContainerHeight - (value * containerHeight) / secondaryMaxValue;
   const heightUptoXaxis = extendedContainerHeight - xAxisThickness;
 
   if (animateOnDataChange) {
-    animations.forEach((item, index) => {
-      item.addListener((val) => {
+    animations.forEach((item: any, index: number) => {
+      item.addListener((val: any) => {
         const temp = data[index]?.value ?? 0;
         data[index].value = val.value;
         let pp = "",
@@ -660,9 +665,9 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
   };
 
   const addLeadingAndTrailingPathForAreaFill = (
-    initialPath,
-    value,
-    dataLength
+    initialPath: string,
+    value: number,
+    dataLength: number
   ) => {
     return (
       "M " +
@@ -690,7 +695,12 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
     );
   };
 
-  const getNextPoint = (data, index, around, before) => {
+  const getNextPoint = (
+    data: any[],
+    index: number,
+    around: boolean,
+    before: boolean
+  ) => {
     const isLast = index === data.length - 1;
     return isLast && !(around || before)
       ? " "
@@ -701,7 +711,7 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
           getY(data[index].value) +
           " ";
   };
-  const getStepPath = (data, i) => {
+  const getStepPath = (data: any[], i: number) => {
     const around = edgePosition === EdgePosition.AROUND_DATA_POINT;
     const before = edgePosition === EdgePosition.BEFORE_DATA_POINT;
     return (
@@ -714,7 +724,13 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
     );
   };
 
-  const getSegmentPath = (data, i, lineSegment, startIndex, endIndex) => {
+  const getSegmentPath = (
+    data: any[],
+    i: number,
+    lineSegment: undefined | LineSegment[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     let path =
       "L" +
       getX(i) +
@@ -1644,7 +1660,7 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
   const lineGradientEndColor =
     props.lineGradientEndColor ?? LineDefaults.lineGradientEndColor;
 
-  const getPointerY = (value) =>
+  const getPointerY = (value: undefined | number) =>
     value
       ? containerHeight -
         (value * containerHeight) / maxValue -
@@ -1687,14 +1703,14 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
   }, [data]);
 
   const setPointerConfig = (
-    initialPointerIndex,
-    item,
-    x,
-    y,
-    y2,
-    y3,
-    y4,
-    y5
+    initialPointerIndex: number,
+    item: any,
+    x: number,
+    y: number,
+    y2: number,
+    y3: number,
+    y4: number,
+    y5: number
   ) => {
     setPointerIndex(initialPointerIndex);
     setPointerItem(item);
@@ -1773,6 +1789,7 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
     onEndReached: props.onEndReached,
     onStartReached: props.onStartReached,
     endReachedOffset: props.endReachedOffset ?? LineDefaults.endReachedOffset,
+    isRTL: false,
   };
 
   return {

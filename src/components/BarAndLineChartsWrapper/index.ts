@@ -317,7 +317,15 @@ export const useBarAndLineChartsWrapper = (
 
   const [canMomentum, setCanMomentum] = useState(false);
 
-  const isCloseToEnd = ({ layoutMeasurement, contentOffset, contentSize }) => {
+  const isCloseToEnd = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }: {
+    layoutMeasurement: { width: number; height: number };
+    contentOffset: { x: number; y: number };
+    contentSize: { width: number; height: number };
+  }) => {
     return I18nManager.isRTL
       ? contentOffset.x <= initialSpacing
       : layoutMeasurement.width + contentOffset.x >=
@@ -332,6 +340,10 @@ export const useBarAndLineChartsWrapper = (
     layoutMeasurement,
     contentOffset,
     contentSize,
+  }: {
+    layoutMeasurement: { width: number; height: number };
+    contentOffset: { x: number; y: number };
+    contentSize: { width: number; height: number };
   }) => {
     return I18nManager.isRTL
       ? layoutMeasurement.width + contentOffset.x >=

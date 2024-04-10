@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import {
   AxesAndRulesDefaults,
+  AxesAndRulesDefaultsType,
+  LineDefaultType,
   LineDefaults,
   chartTypes,
 } from "../utils/constants";
@@ -10,6 +12,7 @@ import {
 } from "../utils";
 import { bicolorLineDataItem } from "./types";
 import { BarAndLineChartsWrapperTypes } from "../utils/types";
+import { ColorValue } from "react-native";
 
 let initialData: Array<bicolorLineDataItem> | null = null;
 
@@ -18,7 +21,83 @@ type Points = {
   color: string;
 };
 
-export const useLineChartBiColor = (props) => {
+export const useLineChartBiColor = (props: {
+  data?: bicolorLineDataItem[];
+  height?: number;
+  noOfSections?: number;
+  yAxisOffset?: number;
+  labelsExtraHeight?: number;
+  startIndex?: number;
+  endIndex?: number;
+  width?: number;
+  maxValue?: number;
+  mostNegativeValue?: number;
+  stepHeight?: number;
+  stepValue?: number;
+  noOfSectionsBelowXAxis?: number;
+  zIndex?: number;
+  stripHeight?: number;
+  scrollToEnd?: boolean;
+  adjustToWidth?: boolean;
+  areaChart?: boolean;
+  scrollAnimation?: boolean;
+  hideAxesAndRules?: boolean;
+  strokeDashArray?: Array<number>;
+  stripColor?: ColorValue;
+  stripOpacity?: number;
+  scrollToIndex?: number;
+  yAxisLabelTexts?: string[];
+  indicatorColor?: "black" | "white" | "default" | undefined;
+  colorNegative?: ColorValue;
+  startFillColorNegative?: ColorValue;
+  endFillColorNegative?: ColorValue;
+  startOpacityNegative?: number;
+  endOpacityNegative?: number;
+  gradientDirection?: string;
+  horizontalRulesStyle?: any; // TODO: Add type
+  scrollEventThrottle?: any; // TODO: Add type
+  animationDuration?: any; // TODO: Add type
+  initialSpacing?: any; // TODO: Add type
+  endSpacing?: any; // TODO: Add type
+  thickness?: any; // TODO: Add type
+  spacing?: any; // TODO: Add type
+  xAxisThickness?: any; // TODO: Add type
+  dataPointsHeight?: any; // TODO: Add type
+  dataPointsWidth?: any; // TODO: Add type
+  dataPointsRadius?: any; // TODO: Add type
+  dataPointsColor?: any; // TODO: Add type
+  dataPointsShape?: any; // TODO: Add type
+  textFontSize?: any; // TODO: Add type
+  textColor?: any; // TODO: Add type
+  showFractionalValues?: any; // TODO: Add type
+  roundToDigits?: any; // TODO: Add type
+  overflowTop?: any; // TODO: Add type
+  rotateLabel?: any; // TODO: Add type
+  isAnimated?: any; // TODO: Add type
+  hideDataPoints?: any; // TODO: Add type
+  color?: any; // TODO: Add type
+  startFillColor?: any; // TODO: Add type
+  endFillColor?: any; // TODO: Add type
+  startOpacity?: any; // TODO: Add type
+  endOpacity?: any; // TODO: Add type
+  showXAxisIndices?: any; // TODO: Add type
+  xAxisIndicesHeight?: any; // TODO: Add type
+  xAxisIndicesWidth?: any; // TODO: Add type
+  xAxisIndicesColor?: any; // TODO: Add type
+  xAxisTextNumberOfLines?: any; // TODO: Add type
+  yAxisLabelWidth?: any; // TODO: Add type
+  hideYAxisText?: any; // TODO: Add type
+  disableScroll?: any; // TODO: Add type
+  showScrollIndicator?: any; // TODO: Add type
+  focusEnabled?: any; // TODO: Add type
+  showDataPointOnFocus?: any; // TODO: Add type
+  showStripOnFocus?: any; // TODO: Add type
+  showTextOnFocus?: any; // TODO: Add type
+  stripWidth?: any; // TODO: Add type
+  unFocusOnPressOut?: any; // TODO: Add type
+  delayBeforeUnFocus?: any; // TODO: Add type
+  endReachedOffset?: any; // TODO: Add type
+}) => {
   const [toggle, setToggle] = useState(false);
   const [pointsArray, setPointsArray] = useState<Array<Points>>([]);
   const [fillPointsArray, setFillPointsArray] = useState<Array<Points>>([]);
@@ -133,8 +212,8 @@ export const useLineChartBiColor = (props) => {
   );
 
   let yAtxAxis = extendedContainerHeight - xAxisThickness / 2;
-  const getX = (index) => initialSpacing + spacing * index;
-  const getY = (index) =>
+  const getX = (index: number) => initialSpacing + spacing * index;
+  const getY = (index: number) =>
     yAtxAxis - (data[index].value * containerHeight) / maxValue;
 
   useEffect(() => {
@@ -217,7 +296,7 @@ export const useLineChartBiColor = (props) => {
 
     let startIndex = -1,
       endIndex = -1,
-      startX,
+      startX = "",
       startY,
       endY,
       color = "green",
@@ -271,7 +350,7 @@ export const useLineChartBiColor = (props) => {
     pointsArray.forEach((item: any, index) => {
       let splitArray = item.points
         .split(" ")
-        .filter((spItem) => spItem && spItem !== " ");
+        .filter((spItem: string) => spItem && spItem !== " ");
 
       if (
         splitArray[1] === yAtxAxis + "" &&
@@ -301,7 +380,7 @@ export const useLineChartBiColor = (props) => {
         let filPts = "";
         for (let j = startIndex; j <= endIndex; j++) {
           if (pointsArray[j]) {
-            filPts += pointsArray[j].points.replaceAll("M", "L");
+            filPts += pointsArray[j].points.replace(new RegExp("M", "g"), "L");
           }
         }
         filPts += "L " + startX + " " + yAtxAxis;
@@ -502,6 +581,7 @@ export const useLineChartBiColor = (props) => {
     pointerX: 0,
     pointerY: 0,
     endReachedOffset: props.endReachedOffset ?? LineDefaults.endReachedOffset,
+    isRTL: false,
   };
 
   return {

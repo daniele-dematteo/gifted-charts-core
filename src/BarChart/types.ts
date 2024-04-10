@@ -171,8 +171,8 @@ export type BarChartPropsType = {
   barWidth?: number;
   sideWidth?: number;
   showLine?: boolean;
-  lineData?: any;
-  lineData2?: any;
+  lineData?: barDataItem[];
+  lineData2?: barDataItem[];
   lineConfig?: lineConfigType;
   lineConfig2?: lineConfigType;
   lineBehindBars?: boolean;
@@ -469,6 +469,7 @@ export type Animated2DWithGradientPropsType = {
   barInnerComponent?: (item?: barDataItem, index?: number) => ReactNode;
   commonStyleForBar?: ViewStyle[];
   barStyleWithBackground?: ViewStyle[];
+  yAxisOffset?: number;
 };
 
 export type RenderBarsPropsType = {
@@ -552,6 +553,7 @@ export type RenderBarsPropsType = {
   pointerConfig?: Pointer;
   focusBarOnPress?: boolean;
   noOfSectionsBelowXAxis?: number;
+  yAxisOffset?: number;
 };
 
 export type trianglePropTypes = {

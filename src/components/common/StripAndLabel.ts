@@ -1,21 +1,37 @@
 import { screenWidth } from "../../utils/constants";
 
-export const getTopAndLeftForStripAndLabel = (props) => {
+export const getTopAndLeftForStripAndLabel = (props: {
+  width?: number;
+  autoAdjustPointerLabelPosition?: boolean;
+  pointerX: number;
+  pointerLabelWidth: number;
+  activatePointersOnLongPress?: boolean;
+  yAxisLabelWidth?: number;
+  pointerRadius?: number;
+  pointerWidth: number;
+  shiftPointerLabelX?: number;
+  pointerLabelHeight?: number;
+  pointerYLocal?: number;
+  pointerStripUptoDataPoint?: number;
+  pointerStripHeight: number;
+  shiftPointerLabelY?: number;
+  scrollX?: number;
+}) => {
   const {
     autoAdjustPointerLabelPosition,
     pointerX,
     pointerLabelWidth,
     activatePointersOnLongPress,
-    yAxisLabelWidth,
+    yAxisLabelWidth = 0,
     pointerRadius,
     pointerWidth,
-    shiftPointerLabelX,
-    pointerLabelHeight,
-    pointerYLocal,
+    shiftPointerLabelX = 0,
+    pointerLabelHeight = 0,
+    pointerYLocal = 0,
     pointerStripUptoDataPoint,
     pointerStripHeight,
-    shiftPointerLabelY,
-    scrollX,
+    shiftPointerLabelY = 0,
+    scrollX = 0,
   } = props;
   let left = 0,
     top = 0;

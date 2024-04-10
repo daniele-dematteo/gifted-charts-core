@@ -1,8 +1,48 @@
 import { AxesAndRulesDefaults } from "../../utils/constants";
 import { HorizSectionsType, secondaryYAxisType } from "../../utils/types";
 import { computeMaxAndMinItems, getLabelTextUtil } from "../../utils";
+import { ColorValue } from "react-native";
 
-export const getHorizSectionVals = (props) => {
+export const getHorizSectionVals = (props: {
+  yAxisLabelTexts: undefined | string[];
+  width?: number;
+  noOfSectionsBelowXAxis: number;
+  totalWidth: number;
+  endSpacing: number;
+  yAxisSide?: any; // TODO: add type
+  noOfSections: number;
+  yAxisLabelWidth?: number;
+  yAxisLabelContainerStyle?: any; // TODO: add type
+  yAxisThickness?: number;
+  yAxisColor?: ColorValue;
+  yAxisExtraHeight?: number;
+  trimYAxisAtTop?: boolean;
+  dashWidth?: number;
+  dashGap?: number;
+  rulesType?: any; // TODO: add type
+  rulesThickness?: number;
+  spacing: number;
+  showYAxisIndices?: boolean;
+  yAxisIndicesHeight?: number;
+  yAxisIndicesWidth?: number;
+  yAxisIndicesColor?: ColorValue;
+  hideOrigin?: boolean;
+  hideYAxisText?: boolean;
+  showFractionalValues?: boolean;
+  yAxisTextNumberOfLines?: number;
+  yAxisLabelPrefix?: string;
+  yAxisLabelSuffix?: string;
+  yAxisTextStyle?: any; // TODO: add type
+  containerHeight: number;
+  maxValue: number;
+  referenceLinesConfig?: any; // TODO: add type
+  stepValue: number;
+  roundToDigits?: number;
+  yAxisOffset?: number;
+  formatYLabel?: any; // TODO: add type
+  secondaryData?: any; // TODO: add type
+  secondaryYAxis?: any; // TODO: add type
+}) => {
   const {
     width,
     noOfSectionsBelowXAxis,
@@ -338,42 +378,45 @@ export const getHorizSectionVals = (props) => {
       }
     : defaultReferenceConfig;
 
-    const getLabelTexts = (val, index) => {
-      return getLabelTextUtil(
-        val,
-        index,
-        showFractionalValues,
-        yAxisLabelTexts,
-        yAxisOffset,
-        yAxisLabelPrefix,
-        yAxisLabelSuffix,
-        roundToDigits ?? AxesAndRulesDefaults.roundToDigits,
-        formatYLabel,
-      );
-    };
-  
-    const getLabelTextsForSecondaryYAxis = (val, index) => {
-      const {
-        showFractionalValues,
-        yAxisLabelTexts,
-        yAxisOffset,
-        yAxisLabelPrefix,
-        yAxisLabelSuffix,
-        roundToDigits,
-        formatYLabel,
-      } = secondaryYAxisConfig;
-      return getLabelTextUtil(
-        val,
-        index,
-        showFractionalValues,
-        yAxisLabelTexts,
-        yAxisOffset,
-        yAxisLabelPrefix,
-        yAxisLabelSuffix,
-        roundToDigits ?? AxesAndRulesDefaults.roundToDigits,
-        formatYLabel,
-      );
-    };
+  const getLabelTexts = (val: any /* TODO: add type*/, index: number) => {
+    return getLabelTextUtil(
+      val,
+      index,
+      showFractionalValues,
+      yAxisLabelTexts,
+      yAxisOffset,
+      yAxisLabelPrefix,
+      yAxisLabelSuffix,
+      roundToDigits ?? AxesAndRulesDefaults.roundToDigits,
+      formatYLabel
+    );
+  };
+
+  const getLabelTextsForSecondaryYAxis = (
+    val: any /* TODO: add type */,
+    index: number
+  ) => {
+    const {
+      showFractionalValues,
+      yAxisLabelTexts,
+      yAxisOffset,
+      yAxisLabelPrefix,
+      yAxisLabelSuffix,
+      roundToDigits,
+      formatYLabel,
+    } = secondaryYAxisConfig;
+    return getLabelTextUtil(
+      val,
+      index,
+      showFractionalValues,
+      yAxisLabelTexts,
+      yAxisOffset,
+      yAxisLabelPrefix,
+      yAxisLabelSuffix,
+      roundToDigits ?? AxesAndRulesDefaults.roundToDigits,
+      formatYLabel
+    );
+  };
 
   return {
     secondaryYAxisConfig,
