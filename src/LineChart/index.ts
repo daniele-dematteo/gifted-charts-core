@@ -436,8 +436,12 @@ export const useLineChart = (props: extendedLineChartPropsType) => {
     overflowTop
   );
   const getX = (index: number) => initialSpacing + spacing * index - 1;
-  const getY = (value: number) =>
-    extendedContainerHeight - (value * containerHeight) / maxValue;
+  const getY = (value: number) =>{
+    if(!maxValue){
+        return extendedContainerHeight - (value * containerHeight) / (maxValue +1)
+    }
+    return extendedContainerHeight - (value * containerHeight) / maxValue
+  }
 
   const { maxItem: secondaryMaxItem } = computeMaxAndMinItems(
     secondaryData,
